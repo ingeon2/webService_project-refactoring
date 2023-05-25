@@ -45,6 +45,7 @@ public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
     private final CustomAuthorityUtils customAuthorityUtils;
+    private final CustomOAuth2UserService customOAuth2UserService;
     private final MemberRepository memberRepository;
     private final MailService mailService;
 
@@ -52,10 +53,12 @@ public class SecurityConfiguration {
                                  CustomAuthorityUtils authorityUtils,
                                  CustomAuthorityUtils customAuthorityUtils,
                                  MemberRepository memberRepository,
-                                 MailService mailService) {
+                                 MailService mailService,
+                                 CustomOAuth2UserService customOAuth2UserService) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
         this.customAuthorityUtils = customAuthorityUtils;
+        this.customOAuth2UserService = customOAuth2UserService;
         this.memberRepository = memberRepository;
         this.mailService = mailService;
     }
@@ -92,8 +95,9 @@ public class SecurityConfiguration {
                         .anyRequest().permitAll()
                 )
                 .oauth2Login().loginPage("/oauth2/authorization/google")
-                .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, customAuthorityUtils, memberRepository, mailService))
-                .failureHandler(new OAuth2UserFailureHandler());
+                .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, customAuthorityUtils))
+                .failureHandler(new OAuth2UserFailureHandler())
+                .userInfoEndpoint().userService(customOAuth2UserService);
 
         return http.build();
     }

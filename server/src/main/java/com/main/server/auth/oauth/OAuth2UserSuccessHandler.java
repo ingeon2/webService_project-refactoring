@@ -8,6 +8,8 @@ import com.main.server.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -29,67 +31,41 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils customAuthorityUtils;
-    private final MemberRepository memberRepository;
-    private final MailService mailService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
         log.info("OAuth2 Login 성공!");
-        OAuth2User oauthUser = (OAuth2User) authentication.getPrincipal();
-        String email = String.valueOf(oauthUser.getAttributes().get("email"));
+        if(authentication.getPrincipal() instanceof DefaultOAuth2User) {
+            log.info("이거 오어스유저 맞는디"); //맞다고 나옴, 근데 왜 캐스팅 못하는거지?
+        }
+
+        if(authentication.getPrincipal() instanceof DefaultOidcUser) {
+            log.info("이거 오익유저 맞는디"); //맞다고 나옴, 그럼 둘 다의 인스턴스가 되는거네?
+        }
+
+        CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
 
 
-        //CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
-        //oAuth2User.setEmail(email);
-        //oAuth2User.setRoles(customAuthorityUtils.createRoles(email));
-
-        String accessToken = delegateAccessToken(oauthUser);
+        String accessToken = delegateAccessToken(oAuth2User);
         //String refreshToken = delegateRefreshToken(oAuth2User);
 
-        String redirectURI = "http://ourecostory.s3-website.ap-northeast-2.amazonaws.com/";
-        Optional<Member> optionalMember = memberRepository.findByEmail(email);
-
-
-        if(optionalMember.isPresent()) {
-            Member member = optionalMember.get();
-            log.info("## 리다이렉트 -> {}", redirectURI);
-            log.info("## 토큰: {}", accessToken);
-            response.setHeader("Authentication", "Bearer_" + accessToken);
-            response.setHeader("memberId", String.valueOf(member.getMemberId()));
-            response.setHeader("role", String.valueOf(member.getRoles()));
-
-            getRedirectStrategy().sendRedirect(request, response, createURI(accessToken, member.getMemberId(), member.getRoles()).toString());
-        }
-        else {
-            log.info("##해당 멤버 저장 시작");
-            Member member1 = new Member(email, email.substring(0, email.indexOf("@")));
-            List<String> roles = customAuthorityUtils.createRoles(email);
-            member1.setRoles(roles);
-            memberRepository.save(member1);
-            log.info("##해당 멤버 저장 완료");
-            log.info("## 리다이렉트 -> {}", redirectURI);
-            log.info("## 토큰: {}", accessToken);
-
-            mailService.sendEmail(email, "반가워요!", "정말 반갑습니다!");
-            log.info("메일 전송 완료!");
-            getRedirectStrategy().sendRedirect(request, response, createURI(accessToken, member1.getMemberId(), member1.getRoles()).toString());
-        }
-
-
+        String redirectURI = "http://www.naver.com"; // 서버주소에서 리팩토링 위해 바꿔놓음.
+        log.info("## 리다이렉트 -> {}", redirectURI);
+        log.info("## 토큰: {}", accessToken);
+        getRedirectStrategy().sendRedirect(request, response, createURI(accessToken).toString());
 
     }
 
-    private URI createURI(String accessToken, long memberId, List<String> roles) {
+    private URI createURI(String accessToken) {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("access_token", accessToken);
-        queryParams.add("memberId", String.valueOf(memberId));
-        queryParams.add("Role", String.valueOf(roles));
+        //queryParams.add("refresh_token", refreshToken);
 
         return UriComponentsBuilder.newInstance()
                 .scheme("http")
                 //.scheme("https")
-                .host("ourecostory.s3-website.ap-northeast-2.amazonaws.com/")
+                .host("www.naver.com") // 서버주소에서 리팩토링 위해 바꿔놓음.
                 .queryParams(queryParams).build().toUri();
     }
 
