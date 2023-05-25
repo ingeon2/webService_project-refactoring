@@ -2,7 +2,8 @@
 
 ## 5/26  
 프로젝트 마무리. 이후 코드 리팩터링 + 코드리뷰는 혼자해보기 (어디든지 상관 없음)  
-  
+
+## 5/27
 처음 리팩터링  
 ### class org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser cannot be cast to  
 ### class com.main.server.auth.oauth.CustomOAuth2User 에러임.  
