@@ -19,29 +19,29 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {  // (1)
+public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenizer jwtTokenizer;
 
-    // (2)
+
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenizer = jwtTokenizer;
     }
 
-    // (3)
+
     @SneakyThrows
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
 
-        ObjectMapper objectMapper = new ObjectMapper();    // (3-1)
-        LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class); // (3-2)
+        ObjectMapper objectMapper = new ObjectMapper();
+        LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
 
         // (3-3)
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
 
-        return authenticationManager.authenticate(authenticationToken);  // (3-4)
+        return authenticationManager.authenticate(authenticationToken);
     }
 
     // (4)
@@ -50,20 +50,20 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult) throws ServletException, IOException {
-        Member member = (Member) authResult.getPrincipal();  // (4-1)
+        Member member = (Member) authResult.getPrincipal();
 
-        String accessToken = delegateAccessToken(member);   // (4-2)
-        //String refreshToken = delegateRefreshToken(member); // (4-3)
+        String accessToken = delegateAccessToken(member);
+        //String refreshToken = delegateRefreshToken(member);
 
-        response.setHeader("Authorization", "Bearer " + accessToken);  // (4-4)
+        response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("memberId", String.valueOf(member.getMemberId()));
         response.setHeader("role", String.valueOf(member.getRoles()));
-        //response.setHeader("Refresh", refreshToken);                   // (4-5)
+        //response.setHeader("Refresh", refreshToken);
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
 
-    // (5)
+
     private String delegateAccessToken(Member member) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("username", member.getEmail());
@@ -79,7 +79,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         return accessToken;
     }
 
-    // (6)
+
     private String delegateRefreshToken(Member member) {
         String subject = member.getEmail();
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
