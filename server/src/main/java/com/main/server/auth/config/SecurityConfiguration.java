@@ -94,7 +94,7 @@ public class SecurityConfiguration {
                         //admin 전용 뭐 추가할거잇스면 여기에 추가
                         .anyRequest().permitAll()
                 )
-                .oauth2Login().loginPage("/oauth2/authorization/google")
+                .oauth2Login()//.loginPage("/oauth2/authorization/google")
                 .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, customAuthorityUtils))
                 .failureHandler(new OAuth2UserFailureHandler())
                 .userInfoEndpoint().userService(customOAuth2UserService);
