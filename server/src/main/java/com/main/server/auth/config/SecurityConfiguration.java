@@ -46,21 +46,15 @@ public class SecurityConfiguration {
     private final CustomAuthorityUtils authorityUtils;
     private final CustomAuthorityUtils customAuthorityUtils;
     private final CustomOAuth2UserService customOAuth2UserService;
-    private final MemberRepository memberRepository;
-    private final MailService mailService;
 
     public SecurityConfiguration(JwtTokenizer jwtTokenizer,
                                  CustomAuthorityUtils authorityUtils,
                                  CustomAuthorityUtils customAuthorityUtils,
-                                 MemberRepository memberRepository,
-                                 MailService mailService,
                                  CustomOAuth2UserService customOAuth2UserService) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
         this.customAuthorityUtils = customAuthorityUtils;
         this.customOAuth2UserService = customOAuth2UserService;
-        this.memberRepository = memberRepository;
-        this.mailService = mailService;
     }
 
     @Bean
@@ -94,10 +88,10 @@ public class SecurityConfiguration {
                         //admin 전용 뭐 추가할거잇스면 여기에 추가
                         .anyRequest().permitAll()
                 )
-                .oauth2Login()//.loginPage("/oauth2/authorization/google")
+                .oauth2Login()//.loginPage("/oauth2/authorization/google") //이거 없어도 로그인페이지 주소는 똑같음.
                 .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, customAuthorityUtils))
-                .failureHandler(new OAuth2UserFailureHandler())
-                .userInfoEndpoint().userService(customOAuth2UserService);
+                .failureHandler(new OAuth2UserFailureHandler());
+                //.userInfoEndpoint().userService(customOAuth2UserService);
 
         return http.build();
     }

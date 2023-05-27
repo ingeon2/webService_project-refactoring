@@ -3,12 +3,9 @@ package com.main.server.auth.oauth;
 import com.main.server.member.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * 각 소셜에서 받아오는 데이터가 다르므로
@@ -18,10 +15,10 @@ import java.util.UUID;
 public class OAuthAttributes {
 
     private String nameAttributeKey; // OAuth2 로그인 진행 시 키가 되는 필드 값, PK와 같은 의미
-    private GoogleOAuth2UserInfo oauth2UserInfo; // 소셜 타입별 로그인 유저 정보(닉네임, 이메일, 프로필 사진 등등)
+    private OAuth2UserInfo oauth2UserInfo; // 소셜 타입별 로그인 유저 정보(닉네임, 이메일, 프로필 사진 등등)
 
     @Builder
-    public OAuthAttributes(String nameAttributeKey, GoogleOAuth2UserInfo oauth2UserInfo,
+    public OAuthAttributes(String nameAttributeKey, OAuth2UserInfo oauth2UserInfo,
                            PasswordEncoder passwordEncoder) {
         this.nameAttributeKey = nameAttributeKey;
         this.oauth2UserInfo = oauth2UserInfo;
@@ -30,7 +27,7 @@ public class OAuthAttributes {
     public static OAuthAttributes of( String userNameAttributeName, Map<String, Object> attributes) {
         return OAuthAttributes.builder()
                 .nameAttributeKey(userNameAttributeName)
-                .oauth2UserInfo(new GoogleOAuth2UserInfo(attributes))
+                .oauth2UserInfo(new OAuth2UserInfo(attributes))
                 .build();
     }
 
@@ -41,7 +38,7 @@ public class OAuthAttributes {
      * role은 GUEST로 설정
      * 비밀번호는 임의로 작성
      */
-    public Member toEntity(GoogleOAuth2UserInfo oauth2UserInfo) {
+    public Member toEntity(OAuth2UserInfo oauth2UserInfo) {
 //        String location;
 //        switch (oauth2UserInfo.getLocation()){
 //            case "ko": location = "KR"; break;

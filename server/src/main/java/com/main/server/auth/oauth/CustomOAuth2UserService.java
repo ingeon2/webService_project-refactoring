@@ -1,5 +1,6 @@
 package com.main.server.auth.oauth;
 
+import com.main.server.auth.mail.MailService;
 import com.main.server.member.entity.Member;
 import com.main.server.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ import java.util.Map;
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     private final MemberRepository memberRepository;
+    private final MailService mailService;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -86,6 +88,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
      */
     private Member saveUser(OAuthAttributes attributes) {
         Member createdUser = attributes.toEntity(attributes.getOauth2UserInfo());
+        mailService.sendEmail(createdUser.getEmail(), "메일 제목", "메일 내용");
         return memberRepository.save(createdUser);
     }
 }

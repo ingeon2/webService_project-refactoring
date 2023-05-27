@@ -2,11 +2,11 @@ package com.main.server.auth.oauth;
 
 import java.util.Map;
 
-public class GoogleOAuth2UserInfo {
+public class OAuth2UserInfo {
 
     protected Map<String, Object> attributes;
 
-    public GoogleOAuth2UserInfo(Map<String, Object> attributes) {
+    public OAuth2UserInfo(Map<String, Object> attributes) {
         this.attributes = attributes;
     }
 
