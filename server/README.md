@@ -29,7 +29,10 @@
 그 이후로는 더이상 DefaultOidcUser 클래스로 인식하지 않았고,  
 DefaultOAuth2User으로 인식할 수 있었다.<br/><br/>  
 
-## 5/30  
+## 5/31  
 ### 그러고 나서 코드는 어떻게 수정했지?
-이전엔 해당 오류때문에d
+이전엔 해당 오류때문에 SecurityConfiguration 클래스의 filterchain  
+매서드의 엔드포인트에 service 클래스를 달지 않고, 성공 핸들러에서 실행했지만,  
+이제 당당하게 비즈니스로직이 포함된 service클래스를  
+filterchain의 endpoint에 달 수 있다.  
 

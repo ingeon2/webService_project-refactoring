@@ -90,8 +90,8 @@ public class SecurityConfiguration {
                 )
                 .oauth2Login()//.loginPage("/oauth2/authorization/google") //이거 없어도 로그인페이지 주소는 똑같음.
                 .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, customAuthorityUtils))
-                .failureHandler(new OAuth2UserFailureHandler());
-                //.userInfoEndpoint().userService(customOAuth2UserService);
+                .failureHandler(new OAuth2UserFailureHandler())
+                .userInfoEndpoint().userService(customOAuth2UserService);
 
         return http.build();
     }
