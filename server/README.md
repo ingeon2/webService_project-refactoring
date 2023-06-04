@@ -36,3 +36,5 @@ DefaultOAuth2User으로 인식할 수 있었다.<br/><br/>
 이제 당당하게 비즈니스로직이 포함된 service클래스를  
 filterchain의 endpoint에 달 수 있다.  
 
+## 6/4
+

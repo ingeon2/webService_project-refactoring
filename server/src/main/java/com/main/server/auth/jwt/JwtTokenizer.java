@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.Map;
 
 @Component
-public class JwtTokenizer {
+public class JwtTokenizer { //JWT 를 생성하고 검증하는 역할을 수행하는 클래스
     @Getter
     @Value("${jwt.key}")
     private String secretKey;       //환경변수
@@ -33,6 +33,7 @@ public class JwtTokenizer {
     private int refreshTokenExpirationMinutes;
 
     public String encodeBase64SecretKey(String secretKey) {
+        //Plain Text 형태인 Secret Key의 byte[]를 Base64 형식의 문자열로 인코딩
         return Encoders.BASE64.encode(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
@@ -43,11 +44,11 @@ public class JwtTokenizer {
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
         return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(subject)
+                .setClaims(claims) //JWT에 포함시킬 Custom Claims를 추가합니다. Custom Claims에는 주로 인증된 사용자와 관련된 정보를 추가
+                .setSubject(subject) //JWT에 대한 제목을 추가
                 .setIssuedAt(Calendar.getInstance().getTime())
                 .setExpiration(expiration)
-                .signWith(key)
+                .signWith(key) //서명을 위한 Key(java.security.Key) 객체를 설정
                 .compact();
     }
 
@@ -81,7 +82,7 @@ public class JwtTokenizer {
                 .parseClaimsJws(jws);
     }
 
-    // (5)
+
     public Date getTokenExpiration(int expirationMinutes) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, expirationMinutes);
@@ -91,6 +92,7 @@ public class JwtTokenizer {
     }
 
     private Key getKeyFromBase64EncodedKey(String base64EncodedSecretKey) {
+        //getKeyFromBase64EncodedKey() 메서드는 JWT의 서명에 사용할 Secret Key를 생성
         byte[] keyBytes = Decoders.BASE64.decode(base64EncodedSecretKey);
 
 
@@ -100,6 +102,7 @@ public class JwtTokenizer {
             keyBytes = paddedKeyBytes;
         }
 
+        //HMAC 알고리즘을 적용한 Key(java.security.Key) 객체를 생성
         Key key = Keys.hmacShaKeyFor(keyBytes);
 
         return key;
