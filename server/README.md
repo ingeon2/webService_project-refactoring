@@ -112,7 +112,18 @@ CREATE TABLE mytable (
 아니다! 바꿔주는 설정이 존재한다!  
 야믈(yml) 설정파일에, spring.datasource.url 경로를 따라 있는  
 jdbc:h2:mem:test 의 설정에 ;MODE=MySQL를 붙여주면 된다!  
-즉, jdbc:h2:mem:test;MODE=MySQL 이렇게 사용하면 된다!
+**즉,**   
+```agsl
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  datasource:
+    url: jdbc:h2:mem:test;MODE=MySQL
+```
+**이렇게 사용하면 된다!**  
+
 <br/><br/>
 ### 깨알 꿀팁.  
 jdbc:h2:mem:test 얘는 인메모리고,  
