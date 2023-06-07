@@ -37,4 +37,98 @@ DefaultOAuth2User으로 인식할 수 있었다.<br/><br/>
 filterchain의 endpoint에 달 수 있다.  
 
 ## 6/4
+### 나 로컬에서 개발할때는, h2 사용했는데, 실제 프로젝트 서버에서는 mysql 사용했다.
+### 그 두개의 차이점은?  
 
+h2 database의 장점
+1. 외부 영향없이 독립적 테스트 가능.
+2. 원하는 데이터 마음대로 구성 가능.
+3. 테스트 후 롤백 불필요.
+4. 내부 메모리 db이므로, 빠른 결과 도출 가능.
+
+h2 database의 단점
+1. 프로젝트 커질수록 초기화 데이터 양 많아짐.
+2. 실제 쿼리 수행과 동일하지 않을 수 있음. (mysql 쿼리 != h2 쿼리)
+
+
+## 6/5
+### 그렇다면, 쿼리문은 어떻게 다를까?
+일반적으로, 쿼리문은 거의 같다. 그럼 그나마 차이가 있는 부분은?
+<br/><br/>
+
+1. H2에서는 JOIN 문에서 ON 절을 사용하지 않음. 조건은 WHERE 절에 지정해야 함.  
+
+```agsl
+mysql
+SELECT id
+FROM table1
+JOIN table2 ON table1.id = table2.id;
+```
+
+```agsl
+h2
+SELECT id
+FROM table1
+JOIN table2
+WHERE table1.id = table2.id;
+```  
+<br/><br/>
+
+2.H2에서는 쿼리에서 ';'를 생략 가능, mysql은 ';' 사용해야함
+```agsl
+CREATE TABLE mytable (
+  id INT,
+  name VARCHAR(255)
+);
+```
+<br/><br/>  
+
+3. 데이터 타입<br/>
+   MySQL: DATETIME, TEXT, BLOB 등
+   H2: TIMESTAMP, CLOB, BLOB 등
+<br/><br/>
+4. AUTO_INCREMENT (자동 증가) 설정<br/>
+   MySQL: INT 타입 필드에 AUTO_INCREMENT를 지정하여 자동 증가 값 생성
+   H2: IDENTITY(1,1)를 사용하여 자동 증가 값 생성
+<br/><br/>
+5. 문자열 비교<br/>
+   MySQL: 문자열 비교에 대소문자를 구분 (CASE SENSITIVE)
+   H2: 기본적으로 문자열 비교에 대소문자를 구분하지 않음 (CASE INSENSITIVE)
+   <br/><br/>
+6. LIMIT 및 OFFSET</br>
+   MySQL: LIMIT 및 OFFSET을 사용하여 결과 집합의 행 수를 제한하고 시작 위치를 지정
+   H2: LIMIT 및 OFFSET 또는 TOP을 사용하여 결과 집합의 행 수를 제한하고 시작 위치를 지정
+   <br/><br/>
+
+## 6/6
+### 이에 관해서 찾던중, 핵심을 찾았다!
+위에 적어놓은것과 더불어, h2와 mysql은 동적쿼리 작성(||, CONCAT 차이)  
+등등에 있어 다른 부분이 많다.
+<br/><br/>
+### 그럼 쿼리를 어떻게 다 다르게 변환해야하나..?
+아니다! 바꿔주는 설정이 존재한다!  
+야믈(yml) 설정파일에, spring.datasource.url 경로를 따라 있는  
+jdbc:h2:mem:test 의 설정에 ;MODE=MySQL를 붙여주면 된다!  
+즉, jdbc:h2:mem:test;MODE=MySQL 이렇게 사용하면 된다!
+<br/><br/>
+### 깨알 꿀팁.  
+jdbc:h2:mem:test 얘는 인메모리고,  
+jdbc:h2:mem/test 얘는 직접 경로를 따라 들어가보면 db들이 생성된다.  
+(앞으로의 테스트에 잘 사용하기.)  
+
+<br/><br/>
+
+## 6/7
+그다음, 나는 서버컴퓨터를 업데이트할때는, 서버를 종료시키고  
+새롭게 업데이트된 jar 파일을 그냥 실행시켰다. 근데 현직에선 어떻게할까?
+오토에버 면접에서 질문받은 문제이다.  
+
+### 여기서 사용하는 개념이, 바로 CD/CI 이다.
+### CD/CI는 continuous delivery, continuous integration
+### 지속 배포, 지속 통합  
+#### 그럼 어떻게 지속적으로 배포하고 통합하고 하냐..?
+당연히 내가 안한다. 이 세상엔 이미 개발자들을 위한 개발자들이 너무 많다.  
+이렇게 CD/CI를 실행해 줄 수 있는 오픈소스중에, **jenkins**가 있다. 
+내가 프로젝트에서 사용했던 AWS의 EC2에서, 업데이트 될때마다 git clone 할 필요 없이,  
+알아서  git push 하면 EC2에서 새로운 버전으로 실행까지 마쳐주는 역할이다.  
+https://narup.tistory.com/259 에 들어가보면, 처음부터 자세하게 설명되어있다.  
