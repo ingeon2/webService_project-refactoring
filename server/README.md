@@ -164,4 +164,4 @@ https://goddaehee.tistory.com/259?category=399178
 #### Member의 필드에 Point와 Grade라는 필드를 추가해줬다.
 점수를 createBoard, createComment 당시에 추가해주려고 했지만,  
 nullpoinException 으로 미궁에 빠지고 만다..  
-해결은 (벨로그 주소) 에!!
+해결은 https://velog.io/@dlsrjsdl6505/20230608-TIL 에!!
