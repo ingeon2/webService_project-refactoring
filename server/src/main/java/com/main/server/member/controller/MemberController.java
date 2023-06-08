@@ -50,13 +50,13 @@ public class MemberController {
     private final LikeService likeService;
     private final BookmarkService bookmarkService;
 
-    public MemberController(@Lazy MemberService memberService,
+    public MemberController(MemberService memberService,
                             MemberMapper memberMapper,
                             BoardMapper boardMapper,
                             CommentMapper commentMapper,
                             LikeService likeService,
                             BookmarkService bookmarkService,
-                            @Lazy BoardService boardService) {  //TODO: Lazy 어노테이션 사라지게 할 방법
+                            BoardService boardService) {
         this.memberService = memberService;
         this.memberMapper = memberMapper;
         this.boardMapper = boardMapper;
@@ -65,6 +65,7 @@ public class MemberController {
         this.bookmarkService = bookmarkService;
         this.boardService = boardService;
     }
+
     //mem001
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post memberPostDto) {
@@ -175,6 +176,16 @@ public class MemberController {
         myPageDto.setBookmarkBoardIds(boardIds);
 
         return new ResponseEntity<>(myPageDto, HttpStatus.OK);
+    }
+
+    //리팩터링
+    @PatchMapping("/grade/{member-id}")
+    public ResponseEntity patchMemberImage(@PathVariable("member-id") @Positive long memberId) throws IOException {
+        Member patchMember = memberService.findMember(memberId);
+        memberService.updateGrade(patchMember);
+
+        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, patchMember.getMemberId());
+        return ResponseEntity.created(location).build();
     }
 
 }

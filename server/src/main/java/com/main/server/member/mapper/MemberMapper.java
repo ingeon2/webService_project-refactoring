@@ -23,6 +23,7 @@ public interface MemberMapper {
         member.setQuestion(Question.fromString(memberPostDto.getQuestion()));
         member.setAnswer(memberPostDto.getAnswer());
         member.setCreatedAt(LocalDateTime.now());
+        member.setPoint(0);
 
         return member;
     }

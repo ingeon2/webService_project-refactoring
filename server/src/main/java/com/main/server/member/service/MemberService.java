@@ -7,6 +7,7 @@ import com.main.server.awsS3.StorageService;
 import com.main.server.exception.BusinessLogicException;
 import com.main.server.exception.ExceptionCode;
 import com.main.server.member.dto.MemberDto;
+import com.main.server.member.entity.Grade;
 import com.main.server.member.entity.Member;
 import com.main.server.member.mapper.MemberMapper;
 import com.main.server.member.repository.MemberRepository;
@@ -23,6 +24,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import static com.main.server.member.entity.Grade.*;
+
 @Service
 @Slf4j
 @Transactional
@@ -38,11 +41,11 @@ public class MemberService {
     private final MailService mailService;
 
     public MemberService(MemberRepository memberRepository,
-                         @Lazy PasswordEncoder passwordEncoder,
+                         PasswordEncoder passwordEncoder,
                          ApplicationEventPublisher publisher,
                          CustomAuthorityUtils authorityUtils,
                          StorageService storageService,
-                         @Lazy MemberMapper memberMapper,
+                         MemberMapper memberMapper,
                          MailService mailService) {
         this.memberRepository = memberRepository;
         this.publisher = publisher;
@@ -76,7 +79,8 @@ public class MemberService {
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
 
-        mailService.sendEmail(member.getEmail(), "반갑습니다!", "정말 반갑습니다!");
+        //mailService.sendEmail(member.getEmail(), "반갑습니다!", "정말 반갑습니다!");
+        //일단 보내지는데 매번 매일 받는것 귀찮아서 주석처리해놓음 ㅎㅎ;
         log.info("이메일 전송 완료!");
 
         Member savedMember = memberRepository.save(member);
@@ -169,11 +173,20 @@ public class MemberService {
         return findVerifiedMember(memberId);
     }
 
+    public void updateGrade(Member member) { //member의 grade 업데이트해주는 로직, 리팩터링
+        member.setPoint(member.getBoards().size() * 10 + member.getComments().size() * 5);
+        int point = member.getPoint();
+
+        member.setGrade(findGrade(point));
+    }
 
 
 
 
 
+
+    
+    
 
     //여기 아래 둘은 여기 클래스에서만 사용할 매서드
 
@@ -236,4 +249,15 @@ public class MemberService {
 
         return findMember;
     }
+
+    private static Grade findGrade(int point) { //점수따라 등급제
+        if(point > 50) return GRADE5;
+        if(point > 40) return GRADE4;
+        if(point > 30) return GRADE3;
+        if(point > 20) return GRADE2;
+        else return GRADE1;
+
+    }
+    
+
 }

@@ -48,6 +48,11 @@ public class Member extends Auditable {
     @Column
     private String answer;
 
+    @Enumerated(EnumType.STRING)
+    private Grade grade;
+    @Column
+    private Integer point;
+
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
