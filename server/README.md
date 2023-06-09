@@ -164,9 +164,9 @@ https://goddaehee.tistory.com/259?category=399178
 #### Member의 필드에 Point와 Grade라는 필드를 추가해줬다.
 점수를 createBoard, createComment 당시에 추가해주려고 했지만,  
 nullpoinException 으로 미궁에 빠지고 만다..  
-해결은 https://velog.io/@dlsrjsdl6505/20230608-TIL 에!!
+해결은 https://velog.io/@dlsrjsdl6505/%EB%A6%AC%ED%8C%A9%ED%84%B0%EB%A7%81-%EA%B8%B0%EB%8A%A5%EC%B6%94%EA%B0%80 에!!
 <br/><br/>
 
 ## 6/9
 ### 오늘은, 카카오 오어스를 추가하기 위해 클래스를 만들었다.
-#### 완성되면 설명과 함께 링크를 남기겠다.. 쉽지않지만 화이팅
+https://velog.io/@dlsrjsdl6505/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81-%EC%B9%B4%EC%B9%B4%EC%98%A4-Oauth2-1
