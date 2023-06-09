@@ -8,12 +8,10 @@ import com.main.server.auth.handler.MemberAuthenticationEntryPoint;
 import com.main.server.auth.handler.MemberAuthenticationFailureHandler;
 import com.main.server.auth.handler.MemberAuthenticationSuccessHandler;
 import com.main.server.auth.jwt.JwtTokenizer;
-import com.main.server.auth.mail.MailService;
-import com.main.server.auth.oauth.CustomOAuth2UserService;
-import com.main.server.auth.oauth.OAuth2UserFailureHandler;
-import com.main.server.auth.oauth.OAuth2UserSuccessHandler;
+import com.main.server.auth.googleoauth.CustomOAuth2UserService;
+import com.main.server.auth.googleoauth.OAuth2UserFailureHandler;
+import com.main.server.auth.googleoauth.OAuth2UserSuccessHandler;
 import com.main.server.auth.utils.CustomAuthorityUtils;
-import com.main.server.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -89,6 +87,7 @@ public class SecurityConfiguration {
                         .anyRequest().permitAll()
                 )
                 .oauth2Login()//.loginPage("/oauth2/authorization/google") //이거 없어도 로그인페이지 주소는 똑같음.
+                //.loginPage(https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code)
                 .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, customAuthorityUtils))
                 .failureHandler(new OAuth2UserFailureHandler())
                 .userInfoEndpoint().userService(customOAuth2UserService);

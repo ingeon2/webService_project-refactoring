@@ -6,7 +6,7 @@
 ## 5/27
 처음 리팩터링  (외부 api 오어스 관련)
 ### class org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser cannot be cast to  
-### class com.main.server.auth.oauth.CustomOAuth2User 에러임.  
+### class com.main.server.auth.googleoauth.CustomOAuth2User 에러임.  
 즉,  
 내가 DefaultOAuth2User를 상속받도록 만든 CustomOAuth2User 클래스가 있음.  
 근데 오어스 로그인 성공해서 받아온 principal(authentication.getPrincipal();)을  
@@ -165,3 +165,8 @@ https://goddaehee.tistory.com/259?category=399178
 점수를 createBoard, createComment 당시에 추가해주려고 했지만,  
 nullpoinException 으로 미궁에 빠지고 만다..  
 해결은 https://velog.io/@dlsrjsdl6505/20230608-TIL 에!!
+<br/><br/>
+
+## 6/9
+### 오늘은, 카카오 오어스를 추가하기 위해 클래스를 만들었다.
+#### 완성되면 설명과 함께 링크를 남기겠다.. 쉽지않지만 화이팅

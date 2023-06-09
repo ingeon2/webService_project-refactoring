@@ -1,10 +1,7 @@
-package com.main.server.auth.oauth;
+package com.main.server.auth.googleoauth;
 
 import com.main.server.auth.jwt.JwtTokenizer;
-import com.main.server.auth.mail.MailService;
 import com.main.server.auth.utils.CustomAuthorityUtils;
-import com.main.server.member.entity.Member;
-import com.main.server.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;

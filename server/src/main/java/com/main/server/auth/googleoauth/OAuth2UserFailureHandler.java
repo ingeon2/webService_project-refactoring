@@ -1,4 +1,4 @@
-package com.main.server.auth.oauth;
+package com.main.server.auth.googleoauth;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;

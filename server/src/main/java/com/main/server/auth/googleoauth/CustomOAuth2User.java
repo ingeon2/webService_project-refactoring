@@ -1,4 +1,4 @@
-package com.main.server.auth.oauth;
+package com.main.server.auth.googleoauth;
 
 import lombok.Getter;
 import lombok.Setter;
