@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -24,6 +25,7 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class KakaoController { //카카오 오어스 로그인시, 정보 받아올 컨트롤러
 
+    @Autowired
     private KakaoMemberService kakaoMemberService;
 
     @GetMapping("/auth/kakao/callback") //아까 작성한 redirect url
@@ -103,15 +105,12 @@ public class KakaoController { //카카오 오어스 로그인시, 정보 받아
                 String.class
         );
 
-        //kakaoMemberService.saveUser(response1);
+        kakaoMemberService.saveUser(response1.getBody());
         //TODO : 마저 구현해야함
-
 
 
         return response1.getBody();
 
-        //내가 설정해서, 받아오는 정보는
-        //"scope":"account_email profile_nickname" 이와 같다.
     }
 }
 
