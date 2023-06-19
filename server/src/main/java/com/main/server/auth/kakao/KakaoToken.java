@@ -1,4 +1,4 @@
-package com.main.server.auth.kakaooauth;
+package com.main.server.auth.kakao;
 
 import lombok.Data;
 

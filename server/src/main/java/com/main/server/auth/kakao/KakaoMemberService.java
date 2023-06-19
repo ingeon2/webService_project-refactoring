@@ -1,15 +1,12 @@
-package com.main.server.auth.kakaooauth;
+package com.main.server.auth.kakao;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.main.server.auth.mail.MailService;
 import com.main.server.member.entity.Member;
 import com.main.server.member.repository.MemberRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;

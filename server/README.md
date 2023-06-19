@@ -169,11 +169,18 @@ nullpoinException 으로 미궁에 빠지고 만다..
 
 ## 2023/6/9
 ### 오늘은, 카카오 오어스를 추가하기 위해 코드를 수정하고, 추가해주었다.
+auth 패키지에 kakao 패키지를 추가하고,  
+해당 패키지 안에 요청 보내고 받아올 컨트롤러를 추가해줬다.  
+컨트롤러를 통해 json으로 받아오기까지 구현.
 https://velog.io/@dlsrjsdl6505/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81-%EC%B9%B4%EC%B9%B4%EC%98%A4-Oauth2-1
 <br/><br/>
 
 ## 2023/6/9
 ### 카카오 API를 가져와서 직접 사용하기 위해, 정보를 가공했다.
-https://velog.io/@dlsrjsdl6505/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81-%EC%B9%B4%EC%B9%B4%EC%98%A4-Oauth2-2
+json으로 받아온 정보를 kakaoMemberService 클래스에서 가공하고,  
+kakaoController에서 저장까지 해주는 로직을 완료했다.  
+자세한 내용은
+https://velog.io/@dlsrjsdl6505/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81-%EC%B9%B4%EC%B9%B4%EC%98%A4-Oauth2-2  
+여기서!
 
 

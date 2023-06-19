@@ -1,4 +1,4 @@
-package com.main.server.auth.kakaooauth;
+package com.main.server.auth.kakao;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
