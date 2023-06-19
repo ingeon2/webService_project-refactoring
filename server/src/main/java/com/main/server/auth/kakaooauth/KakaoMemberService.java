@@ -37,7 +37,7 @@ public class KakaoMemberService {
             // "email" 필드 추출
             String email = jsonNode.get("kakao_account").get("email").asText();
 
-            // 추출한 값을 출력 또는 원하는 대로 처리
+            // 추출한 값을 출력 또는 원하는 대로 처리하는것.
             Member saveMember = new Member(email, nickname);
             memberRepository.save(saveMember);
             mailService.sendEmail(email, "ㅎㅇ", "ㅎㅇ");

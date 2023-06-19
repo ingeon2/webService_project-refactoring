@@ -85,7 +85,7 @@ public class KakaoController { //카카오 오어스 로그인시, 정보 받아
 
         KakaoToken kakaoToken = objectMapper.readValue(response.getBody(), KakaoToken.class);
         //카카오 로그인시 발급되는 accessToken을 가져와 여기 kakaoToken 객체로 바꾸어주고,
-        //해당 객체를 다시 카카오쪽으로 보내어 회원 정보를 얻어올 예정.
+        //해당 객체에서 필요한 필드변수를 다시 카카오쪽으로 보내어 회원 정보를 얻어올 예정.
 
 
 
