@@ -5,7 +5,6 @@ import com.main.server.audit.Auditable;
 import com.main.server.board.entity.Board;
 import com.main.server.bookmark.entity.Bookmark;
 import com.main.server.comment.entity.Comment;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -54,14 +53,14 @@ public class Member extends Auditable {
     private Integer point;
 
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.EAGER) //db 왔다갔다하지말고 한번에 다 꺼내와라
     private List<String> roles = new ArrayList<>();
 
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE) //삭제할 때 같이 삭제
     private List<Board> boards = new ArrayList<>();
 
     @JsonManagedReference

@@ -168,7 +168,12 @@ nullpoinException 으로 미궁에 빠지고 만다..
 <br/><br/>
 
 ## 2023/6/9
-### 오늘은, 카카오 오어스를 추가하기 위해 클래스를 만들었다.
+### 오늘은, 카카오 오어스를 추가하기 위해 코드를 수정하고, 추가해주었다.
 https://velog.io/@dlsrjsdl6505/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81-%EC%B9%B4%EC%B9%B4%EC%98%A4-Oauth2-1
+<br/><br/>
+
+## 2023/6/9
+### 카카오 API를 가져와서 직접 사용하기 위해, 정보를 가공했다.
+https://velog.io/@dlsrjsdl6505/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81-%EC%B9%B4%EC%B9%B4%EC%98%A4-Oauth2-2
 
 
