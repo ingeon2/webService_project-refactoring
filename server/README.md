@@ -11,7 +11,8 @@
 내가 DefaultOAuth2User를 상속받도록 만든 CustomOAuth2User 클래스가 있음.  
 근데 오어스 로그인 성공해서 받아온 principal(authentication.getPrincipal();)을  
 도무지  DefaultOAuth2User 클래스로 보지 않고 DefaultOidcUser 클래스로 보기 때문에  
-(CustomOAuth2User) authentication.getPrincipal(); 에서 에러가 나온다는 내용임.<br/><br/>  
+(CustomOAuth2User) authentication.getPrincipal(); 에서  
+캐스팅 할 수 없다는 에러가 나온다는 내용임.<br/><br/>  
 
 ## 2023/5/28
 ### 그럼 에러가 나왔던 이유는 뭐였지?
