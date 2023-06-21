@@ -176,7 +176,7 @@ auth 패키지에 kakao 패키지를 추가하고,
 https://velog.io/@dlsrjsdl6505/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81-%EC%B9%B4%EC%B9%B4%EC%98%A4-Oauth2-1
 <br/><br/>
 
-## 2023/6/9
+## 2023/6/19
 ### 카카오 API를 가져와서 직접 사용하기 위해, 정보를 가공했다.
 json으로 받아온 정보를 kakaoMemberService 클래스에서 가공하고,  
 kakaoController에서 저장까지 해주는 로직을 완료했다.  
@@ -184,4 +184,6 @@ kakaoController에서 저장까지 해주는 로직을 완료했다.
 https://velog.io/@dlsrjsdl6505/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81-%EC%B9%B4%EC%B9%B4%EC%98%A4-Oauth2-2  
 여기서!
 
-
+## 2023/6/20
+### kakao의 clientId와 같은 변수는, yml파일에 저장해놓았다
+@Value를 사용해서.

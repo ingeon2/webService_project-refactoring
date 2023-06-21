@@ -3,8 +3,10 @@ package com.main.server.auth.kakao;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -24,6 +26,9 @@ import org.springframework.web.client.RestTemplate;
 @Transactional
 @RequiredArgsConstructor
 public class KakaoController { //카카오 오어스 로그인시, 정보 받아올 컨트롤러
+
+    @Value("${spring.kakao.client.clientId}")  // 다른 파일에 저장
+    private String clientId;
 
     @Autowired
     private KakaoMemberService kakaoMemberService;
@@ -65,7 +70,7 @@ public class KakaoController { //카카오 오어스 로그인시, 정보 받아
         //HashMap을 사용하는 것이 더 적절
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
-        params.add("client_id", "0333592cc604bee72c0d25c7630a1504");
+        params.add("client_id", clientId);
         params.add("redirect_uri", "http://localhost:8080/auth/kakao/callback");
         params.add("code", code);
 
@@ -106,7 +111,6 @@ public class KakaoController { //카카오 오어스 로그인시, 정보 받아
         );
 
         kakaoMemberService.saveUser(response1.getBody());
-        //TODO : 마저 구현해야함
 
 
         return response1.getBody();

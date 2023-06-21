@@ -2,14 +2,11 @@ package com.main.server.member.controller;
 
 import com.main.server.Like.service.LikeService;
 import com.main.server.board.dto.BoardDto;
-import com.main.server.board.entity.Board;
 import com.main.server.board.mapper.BoardMapper;
 import com.main.server.board.service.BoardService;
 import com.main.server.bookmark.service.BookmarkService;
-import com.main.server.bookmark.dto.BookmarkDto;
 import com.main.server.comment.dto.CommentDto;
 import com.main.server.comment.mapper.CommentMapper;
-import com.main.server.comment.service.CommentService;
 import com.main.server.dto.SingleResponseDto;
 import com.main.server.member.dto.MemberDto;
 import com.main.server.member.entity.Member;
@@ -17,10 +14,8 @@ import com.main.server.member.mapper.MemberMapper;
 import com.main.server.member.service.MemberService;
 import com.main.server.utils.UriCreator;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +27,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RestController
 @Slf4j
@@ -69,7 +63,10 @@ public class MemberController {
     //mem001
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post memberPostDto) {
-        Member createMember = memberService.createMember(memberPostDto);
+        Member createMember = memberService.createMember(memberPostDto); 
+        //createMember 매서드 안의 private 매서드(유효성 검증) 때문에
+        //Service   가 두번 호출되어 트랜잭션이 두번 될 수 있는거 아닌가?
+
         URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createMember.getMemberId());
 
         return ResponseEntity.created(location).build();
@@ -108,7 +105,7 @@ public class MemberController {
     }
 
     //프로필사진 삭제
-    @PatchMapping("/deleteimage/{member-id}")
+    @PatchMapping("/deleteImage/{member-id}")
     public ResponseEntity patchMemberImageDelete(@PathVariable("member-id") long memberId) {
         Member patchMember = memberService.deleteProfileImage(memberId);
 

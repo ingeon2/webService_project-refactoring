@@ -183,9 +183,9 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public Board findVerifiedBoard(long answerId) {
+    public Board findVerifiedBoard(long boardId) {
         Optional<Board> optionalBoard =
-                boardRepository.findById(answerId);
+                boardRepository.findById(boardId);
         Board findBoard =
                 optionalBoard.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND));

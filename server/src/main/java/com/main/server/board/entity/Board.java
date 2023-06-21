@@ -26,7 +26,7 @@ public class Board {
     private String title;
 
     @Column(nullable = false)
-    @Lob
+    @Lob //일반적인 데이터베이스에서 저장하는 길이인 255개 이상의 문자를 저장하고 싶을 때 지정
     private String content;
 
     @Column()
