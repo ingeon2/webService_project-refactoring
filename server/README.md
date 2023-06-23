@@ -183,7 +183,17 @@ kakaoController에서 저장까지 해주는 로직을 완료했다.
 자세한 내용은
 https://velog.io/@dlsrjsdl6505/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81-%EC%B9%B4%EC%B9%B4%EC%98%A4-Oauth2-2  
 여기서!
+<br/><br/>
 
 ## 2023/6/20
 ### kakao의 clientId와 같은 변수는, yml파일에 저장해놓았다
 @Value를 사용해서.
+<br/><br/>
+
+## 2023/6/23
+### 지속 가능한 코드를 만들기 위해, 패키징을 고쳤다.
+궁극적인 목표는  
+지속 가능한 코드가 지속 가능한 SW를 만들고, 해당 SW는 점점 진화해서 산업을 이끈다.  
+자세한 내용은  
+https://velog.io/@dlsrjsdl6505/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A6%AC%ED%8C%A9%ED%84%B0%EB%A7%81-%ED%8C%A8%ED%82%A4%EC%A7%80-%EA%B5%AC%EC%A1%B0
+
