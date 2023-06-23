@@ -186,8 +186,10 @@ https://velog.io/@dlsrjsdl6505/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A6%AC%ED
 <br/><br/>
 
 ## 2023/6/20
-### kakao의 clientId와 같은 변수는, yml파일에 저장해놓았다
-@Value를 사용해서.
+### kakao의 clientId와 같은 변수는, @Value를 사용해서 yml파일에 저장해놓았다
+yml 파일은 굳이 지금은 서버에서 실행할 필요 없으니,  
+보안상 이유로 깃허브에 올리지 않았다.
+
 <br/><br/>
 
 ## 2023/6/23
