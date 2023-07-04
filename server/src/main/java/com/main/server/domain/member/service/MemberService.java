@@ -76,7 +76,6 @@ public class MemberService {
         member.setRoles(roles);
 
         mailService.sendEmail(member.getEmail(), "반갑습니다!", "정말 반갑습니다!");
-        //일단 보내지는데 매번 매일 받는것 귀찮아서 주석처리해놓음 ㅎㅎ;
         log.info("이메일 전송 완료!");
 
         Member savedMember = memberRepository.save(member);
