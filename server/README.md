@@ -6,7 +6,7 @@
 ## 2023/5/27
 처음 리팩터링  (외부 api 오어스 관련)
 ### class org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser cannot be cast to  
-### class com.main.server.auth.googleoauth.CustomOAuth2User 에러임.  
+### class com.main.server.auth.googleoauth.CustomOAuth2User 에러해결이 첫번쨰 순서임.  
 즉,  
 내가 DefaultOAuth2User를 상속받도록 만든 CustomOAuth2User 클래스가 있음.  
 근데 오어스 로그인 성공해서 받아온 principal(authentication.getPrincipal();)을  
