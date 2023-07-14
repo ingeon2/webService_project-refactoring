@@ -4,7 +4,10 @@
 프로젝트 마무리. 이후 코드 리팩터링 + 코드리뷰는 혼자해보기 (어디든지 상관 없음)<br/><br/>  
 
 ## 2023/5/27
-처음 리팩터링  (외부 api 오어스 관련)
+처음 리팩터링  (외부 api 오어스 관련)  
+프로젝트 당시엔 해결하지 못해서  
+임시로 캡슐화를 어겨가며 코드를 작성했었는데,  
+(알맞지 않은 클래스에서 원하는 로직 작동하도록 설계.)
 ### class org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser cannot be cast to  
 ### class com.main.server.auth.googleoauth.CustomOAuth2User 에러해결이 첫번쨰 순서임.  
 즉,  
@@ -37,7 +40,27 @@ DefaultOAuth2User으로 인식할 수 있었다.<br/><br/>
 service 클래스를 달지 않고,  
 oop 원칙에 어긋나게 성공 핸들러에서 db에 저장까지 실행했지만,  
 이제 당당하게 비즈니스로직이 포함된 service클래스를  
-filterchain의 endpoint에 달 수 있다.  
+filterchain의 endpoint에 추가해줄 수 있었다.   
+  
+
+````
+ .oauth2Login().loginPage("/oauth2/authorization/google")
+ .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, customAuthorityUtils, memberRepository, mailService))
+ .failureHandler(new OAuth2UserFailureHandler());
+ //.userInfoEndpoint().userService(customOAuth2UserService);
+
+위의 코드를 보면 리팩터링 이전엔 SecurityConfig 클래스에서
+외부 API를 통해 저장을 성공하면,
+성공 핸들러에서 저장하는 로직을 사용했다. (위의 이슈때문에)
+즉, 캡슐화를 높게 설정했어야 했지만 어긋난것에서,
+아래와 같이 service 로직에서 잘 저장할 수 있도록 하였다.
+
+ .oauth2Login().loginPage("/oauth2/authorization/google")
+ .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, customAuthorityUtils))
+ .failureHandler(new OAuth2UserFailureHandler())
+ .userInfoEndpoint().userService(customOAuth2UserService);
+
+````
 
 ## 2023/6/4
 ### 나 로컬에서 개발할때는, h2 사용했는데, 실제 프로젝트 서버에서는 mysql 사용했다.
