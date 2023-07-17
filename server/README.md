@@ -222,3 +222,7 @@ yml 파일은 굳이 지금은 서버에서 실행할 필요 없으니,
 자세한 내용은  
 https://velog.io/@dlsrjsdl6505/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A6%AC%ED%8C%A9%ED%84%B0%EB%A7%81-%ED%8C%A8%ED%82%A4%EC%A7%80-%EA%B5%AC%EC%A1%B0
 
+<br/><br/>
+## 2023/7/17
+### 리팩터링한 내용을 정리해서 글로 옮겼다.
+https://velog.io/@dlsrjsdl6505/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A6%AC%ED%8C%A9%ED%84%B0%EB%A7%81-SOLID%EC%9B%90%EC%B9%99

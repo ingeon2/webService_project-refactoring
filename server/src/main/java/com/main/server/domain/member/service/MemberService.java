@@ -229,13 +229,13 @@ public class MemberService {
         Optional<Member> optionalMember = memberRepository.findByNickname(nickname);
         if(optionalMember.isPresent()) throw new BusinessLogicException(ExceptionCode.MEMBER_NICKNAME_EXISTS);
     }
-    private Member findVerifiedMember(long memberId) { //존재하는 회원인지
-        Optional<Member> optionalMember = memberRepository.findById(memberId);
-        Member findMember = optionalMember.orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        private Member findVerifiedMember(long memberId) { //존재하는 회원인지
+            Optional<Member> optionalMember = memberRepository.findById(memberId);
+            Member findMember = optionalMember.orElseThrow(() ->
+                    new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
-        return findMember;
-    }
+            return findMember;
+        }
 
     private Member findVerifiedMemberByRRN(String RRN) { //mem 012
         Optional<Member> optionalMember = memberRepository.findByRRN(RRN);
