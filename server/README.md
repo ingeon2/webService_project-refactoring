@@ -152,6 +152,8 @@ spring:
     url: jdbc:h2:mem:test;MODE=MySQL
 ```
 **이렇게 사용하면 된다!**  
+그리고,
+MySQL뿐만이 아니라 Oracle, Postgresql 등 다른 DB mode로도 사용이 가능하다!
 
 <br/><br/>
 ### 깨알 꿀팁.  
