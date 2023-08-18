@@ -87,25 +87,9 @@ h2 database의 단점
 일반적으로, 쿼리문은 거의 같다. 그럼 그나마 차이가 있는 부분은?
 <br/><br/>
 
-1. H2에서는 JOIN 문에서 ON 절을 사용하지 않음. 조건은 WHERE 절에 지정해야 함.  
 
-```agsl
-mysql
-SELECT id
-FROM table1
-JOIN table2 ON table1.id = table2.id;
-```
 
-```agsl
-h2
-SELECT id
-FROM table1
-JOIN table2
-WHERE table1.id = table2.id;
-```  
-<br/><br/>
-
-2.H2에서는 쿼리에서 ';'를 생략 가능, mysql은 ';' 사용해야함
+H2에서는 쿼리에서 ';'를 생략 가능, mysql은 ';' 사용해야함
 ```agsl
 CREATE TABLE mytable (
   id INT,
@@ -113,20 +97,19 @@ CREATE TABLE mytable (
 );
 ```
 <br/><br/>  
-
-3. 데이터 타입<br/>
+데이터 타입<br/>
    MySQL: DATETIME, TEXT, BLOB 등
    H2: TIMESTAMP, CLOB, BLOB 등
 <br/><br/>
-4. AUTO_INCREMENT (자동 증가) 설정<br/>
+AUTO_INCREMENT (자동 증가) 설정<br/>
    MySQL: INT 타입 필드에 AUTO_INCREMENT를 지정하여 자동 증가 값 생성
    H2: IDENTITY(1,1)를 사용하여 자동 증가 값 생성
 <br/><br/>
-5. 문자열 비교<br/>
+문자열 비교<br/>
    MySQL: 문자열 비교에 대소문자를 구분 (CASE SENSITIVE)
    H2: 기본적으로 문자열 비교에 대소문자를 구분하지 않음 (CASE INSENSITIVE)
    <br/><br/>
-6. LIMIT 및 OFFSET</br>
+LIMIT 및 OFFSET</br>
    MySQL: LIMIT 및 OFFSET을 사용하여 결과 집합의 행 수를 제한하고 시작 위치를 지정
    H2: LIMIT 및 OFFSET 또는 TOP을 사용하여 결과 집합의 행 수를 제한하고 시작 위치를 지정
    <br/><br/>
