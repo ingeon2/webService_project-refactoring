@@ -86,8 +86,10 @@ h2 database의 단점
 ### 그렇다면, 쿼리문은 어떻게 다를까?
 일반적으로, 쿼리문은 거의 같다. 그럼 그나마 차이가 있는 부분은?
 <br/><br/>
-
-
+문자열 연결  
+MySQL: CONCAT() 함수를 사용하여 문자열을 연결 / LIKE CONCAT('%', #{searchKeyword}, '%')    
+H2: CONCAT() 대신 || 연산자를 사용 / LIKE '%'||#{searchKeyword}||'%'
+<br><br>
 
 H2에서는 쿼리에서 ';'를 생략 가능, mysql은 ';' 사용해야함
 ```agsl
@@ -98,20 +100,18 @@ CREATE TABLE mytable (
 ```
 <br/><br/>  
 데이터 타입<br/>
-   MySQL: DATETIME, TEXT, BLOB 등
-   H2: TIMESTAMP, CLOB, BLOB 등
 <br/><br/>
 AUTO_INCREMENT (자동 증가) 설정<br/>
-   MySQL: INT 타입 필드에 AUTO_INCREMENT를 지정하여 자동 증가 값 생성
+   MySQL: INT 타입 필드에 AUTO_INCREMENT를 지정하여 자동 증가 값 생성  
    H2: IDENTITY(1,1)를 사용하여 자동 증가 값 생성
 <br/><br/>
 문자열 비교<br/>
-   MySQL: 문자열 비교에 대소문자를 구분 (CASE SENSITIVE)
+   MySQL: 문자열 비교에 대소문자를 구분 (CASE SENSITIVE)  
    H2: 기본적으로 문자열 비교에 대소문자를 구분하지 않음 (CASE INSENSITIVE)
    <br/><br/>
 LIMIT 및 OFFSET</br>
-   MySQL: LIMIT 및 OFFSET을 사용하여 결과 집합의 행 수를 제한하고 시작 위치를 지정
-   H2: LIMIT 및 OFFSET 또는 TOP을 사용하여 결과 집합의 행 수를 제한하고 시작 위치를 지정
+   MySQL: LIMIT 사용하여 결과 집합의 행 수를 제한하고 시작 위치를 지정  
+   H2: LIMIT 및 TOP을 사용하여 결과 집합의 행 수를 제한하고 시작 위치를 지정
    <br/><br/>
 
 ****
