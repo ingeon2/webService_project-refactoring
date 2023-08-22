@@ -10,6 +10,7 @@ import com.main.server.domain.member.entity.Grade;
 import com.main.server.domain.member.entity.Member;
 import com.main.server.domain.member.mapper.MemberMapper;
 import com.main.server.domain.member.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,7 +28,7 @@ import static com.main.server.domain.member.entity.Grade.*;
 @Service
 @Slf4j
 @Transactional
-
+@RequiredArgsConstructor
 public class MemberService {
 
     private final MemberRepository memberRepository;
@@ -37,20 +38,6 @@ public class MemberService {
     private final StorageService storageService;
     private final MailService mailService;
 
-    public MemberService(MemberRepository memberRepository,
-                         PasswordEncoder passwordEncoder,
-                         ApplicationEventPublisher publisher,
-                         CustomAuthorityUtils authorityUtils,
-                         StorageService storageService,
-                         MemberMapper memberMapper,
-                         MailService mailService) {
-        this.memberRepository = memberRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.authorityUtils = authorityUtils;
-        this.storageService = storageService;
-        this.memberMapper = memberMapper;
-        this.mailService = mailService;
-    }
     
     public Member createMember(Member member) {
         Member savedMember = memberRepository.save(member);
