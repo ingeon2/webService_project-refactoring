@@ -53,6 +53,10 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     private Map<String, Object> verifyJws(HttpServletRequest request) {
         String jws = request.getHeader("Authorization").replace("Bearer ", "");
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
+
+        //Claims가 정상적으로 파싱이 되면 서명 검증 역시 자연스럽게 성공했다는 사실
+        //Claims가 정상적으로 파싱이 되면 서명 검증 역시 자연스럽게 성공했다는 사실
+        //Claims가 정상적으로 파싱이 되면 서명 검증 역시 자연스럽게 성공했다는 사실
         Map<String, Object> claims = jwtTokenizer.getClaims(jws, base64EncodedSecretKey).getBody();
 
         return claims;
