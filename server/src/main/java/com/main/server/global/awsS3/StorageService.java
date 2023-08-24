@@ -29,7 +29,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-@Service
+//@Service
 @Slf4j
 public class StorageService {
 

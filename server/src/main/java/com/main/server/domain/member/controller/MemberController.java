@@ -7,7 +7,7 @@ import com.main.server.domain.board.service.BoardService;
 import com.main.server.domain.bookmark.service.BookmarkService;
 import com.main.server.domain.comment.dto.CommentDto;
 import com.main.server.domain.comment.mapper.CommentMapper;
-import com.main.server.domain.member.service.MemberService;
+import com.main.server.domain.member.service.MemberServiceImpl1;
 import com.main.server.global.dto.SingleResponseDto;
 import com.main.server.domain.member.dto.MemberDto;
 import com.main.server.domain.member.entity.Member;
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/members")
 public class MemberController {
     private final static String MEMBER_DEFAULT_URL = "/members";
-    private final MemberService memberService;
+    private final MemberServiceImpl1 memberServiceImpl1;
     private final BoardService boardService;
     private final MemberMapper memberMapper;
     private final BoardMapper boardMapper;
@@ -44,14 +44,14 @@ public class MemberController {
     private final LikeService likeService;
     private final BookmarkService bookmarkService;
 
-    public MemberController(MemberService memberService,
+    public MemberController(MemberServiceImpl1 memberServiceImpl1,
                             MemberMapper memberMapper,
                             BoardMapper boardMapper,
                             CommentMapper commentMapper,
                             LikeService likeService,
                             BookmarkService bookmarkService,
                             BoardService boardService) {
-        this.memberService = memberService;
+        this.memberServiceImpl1 = memberServiceImpl1;
         this.memberMapper = memberMapper;
         this.boardMapper = boardMapper;
         this.commentMapper = commentMapper;
@@ -63,7 +63,7 @@ public class MemberController {
     //mem001
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post memberPostDto) {
-        Member createMember = memberService.createMember(memberPostDto); 
+        Member createMember = memberServiceImpl1.createMember(memberPostDto);
         //createMember 매서드 안의 private 매서드(유효성 검증) 때문에
         //Service   가 두번 호출되어 트랜잭션이 두번 될 수 있는거 아닌가?
 
@@ -77,7 +77,7 @@ public class MemberController {
     public ResponseEntity patchMemberNickname(@PathVariable("member-id") @Positive long memberId,
                                                @RequestBody MemberDto.PatchNickname memberNicknamePatchDto) {
         memberNicknamePatchDto.setMemberId(memberId);
-        Member patchMember = memberService.updateNickname(memberMapper.memberNicknamePatchDtoToMember(memberNicknamePatchDto));
+        Member patchMember = memberServiceImpl1.updateNickname(memberMapper.memberNicknamePatchDtoToMember(memberNicknamePatchDto));
 
         URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, patchMember.getMemberId());
         return ResponseEntity.created(location).build();
@@ -88,7 +88,7 @@ public class MemberController {
     public ResponseEntity patchMemberPassword(@PathVariable("member-id") @Positive long memberId,
                                               @RequestBody MemberDto.PatchPassword memberPasswordPatchDto) {
         memberPasswordPatchDto.setMemberId(memberId);
-        Member patchMember = memberService.updatePassword(memberPasswordPatchDto);
+        Member patchMember = memberServiceImpl1.updatePassword(memberPasswordPatchDto);
 
         URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, patchMember.getMemberId());
         return ResponseEntity.created(location).build();
@@ -98,7 +98,7 @@ public class MemberController {
     @PatchMapping("/image/{member-id}")
     public ResponseEntity patchMemberImage(@PathVariable("member-id") @Positive long memberId,
                                            @RequestParam(value = "file") MultipartFile file) throws IOException {
-        Member patchMember = memberService.updateProfileImage(memberId, file);
+        Member patchMember = memberServiceImpl1.updateProfileImage(memberId, file);
 
         URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, patchMember.getMemberId());
         return ResponseEntity.created(location).build();
@@ -107,7 +107,7 @@ public class MemberController {
     //프로필사진 삭제
     @PatchMapping("/deleteImage/{member-id}")
     public ResponseEntity patchMemberImageDelete(@PathVariable("member-id") long memberId) {
-        Member patchMember = memberService.deleteProfileImage(memberId);
+        Member patchMember = memberServiceImpl1.deleteProfileImage(memberId);
 
         URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, patchMember.getMemberId());
         return ResponseEntity.created(location).build();
@@ -117,7 +117,7 @@ public class MemberController {
     //mem009
     @DeleteMapping("/{member-id}")
     public ResponseEntity deleteMember(@PathVariable("member-id") @Positive long memberId) {
-        memberService.deleteMember(memberId);
+        memberServiceImpl1.deleteMember(memberId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -129,7 +129,7 @@ public class MemberController {
     public ResponseEntity getMemberPassword(@RequestParam("email") String email,
                                             @RequestParam("question") String question,
                                             @RequestParam("answer") String answer) {
-        String memberPassword = memberService.findMemberPassword(email, question, answer);
+        String memberPassword = memberServiceImpl1.findMemberPassword(email, question, answer);
         SingleResponseDto<String> response = new SingleResponseDto<>(memberPassword);
 
         return ResponseEntity.ok(response);
@@ -138,7 +138,7 @@ public class MemberController {
     //mem013 아이디 보여드릴게
     @GetMapping("/id")
     public ResponseEntity getMemberId(@RequestParam("RRNConfirm") String RRNConfirm) {
-        String memberEmail = memberService.findMemberEmail(RRNConfirm);
+        String memberEmail = memberServiceImpl1.findMemberEmail(RRNConfirm);
 
         SingleResponseDto<String> response = new SingleResponseDto<>(memberEmail);
 
@@ -148,8 +148,8 @@ public class MemberController {
     //마이페이지 get요청
     @GetMapping("/mypage/{member-id}")
     public ResponseEntity getMemberMyPage(@Positive @PathVariable("member-id") long memberId) {
-        MemberDto.GetMyPage myPageDto = memberMapper.memberToMyPageDto(memberService.findMember(memberId));
-        Member findMember = memberService.findMember(memberId);
+        MemberDto.GetMyPage myPageDto = memberMapper.memberToMyPageDto(memberServiceImpl1.findMember(memberId));
+        Member findMember = memberServiceImpl1.findMember(memberId);
 
 
         List<BoardDto.Response> boardResponse = findMember.getBoards().stream()
@@ -178,8 +178,8 @@ public class MemberController {
     //리팩터링
     @PatchMapping("/grade/{member-id}")
     public ResponseEntity patchMemberImage(@PathVariable("member-id") @Positive long memberId) throws IOException {
-        Member patchMember = memberService.findMember(memberId);
-        memberService.updateGrade(patchMember);
+        Member patchMember = memberServiceImpl1.findMember(memberId);
+        memberServiceImpl1.updateGrade(patchMember);
 
         URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, patchMember.getMemberId());
         return ResponseEntity.created(location).build();
