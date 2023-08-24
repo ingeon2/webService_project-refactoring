@@ -221,5 +221,11 @@ https://velog.io/@dlsrjsdl6505/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A6%AC%ED
 <br/><br/>
 ****
 ## 2023/7/17
-### 리팩터링한 내용을 정리해서 글로 옮겼다.
+### 프로젝트 리팩터링 - SOLID원칙
 https://velog.io/@dlsrjsdl6505/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A6%AC%ED%8C%A9%ED%84%B0%EB%A7%81-SOLID%EC%9B%90%EC%B9%99
+
+<br/><br/>
+****
+## 2023/08/24  
+### 프로젝트 리팩터링 - Service 클래스의 모듈화
+https://velog.io/@dlsrjsdl6505/Service-%ED%81%B4%EB%9E%98%EC%8A%A4%EC%9D%98-%EB%AA%A8%EB%93%88%ED%99%94
